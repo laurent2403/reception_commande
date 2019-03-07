@@ -1,0 +1,7 @@
+/**
+ * Fournit les representations d'objets sous forme d'icones.
+ *
+ * @author Johan Melin - CEGIM Informatique
+ */
+package com.reception.gui.iconvalue;
+

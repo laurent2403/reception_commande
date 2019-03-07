@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes de definition des beans de l'application.
+ * 
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+package com.reception.bean;
+

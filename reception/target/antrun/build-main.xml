@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <echo message="Copie du fichier /home/laurent/workspace/reception_bargibant/README.txt"/>
+  <echo message="vers /home/laurent/workspace/reception_bargibant/target/README.txt ..."/>
+  <copy file="/home/laurent/workspace/reception_bargibant/README.txt" tofile="/home/laurent/workspace/reception_bargibant/target/README.txt"/>
+  <replace dir="/home/laurent/workspace/reception_bargibant/target" value="04/03/2019-05:42" token="build_date">
+    <include name="README.txt"/>
+  </replace>
+  <replace dir="/home/laurent/workspace/reception_bargibant/target" value="0.0.1.2" token="cur_version">
+    <include name="README.txt"/>
+  </replace>
+  <fixcrlf eol="crlf" includes="README.txt" srcdir="/home/laurent/workspace/reception_bargibant/target"/>
+  <echo message="Copie du fichier /home/laurent/workspace/reception_bargibant/src/main/config/appConfig-cegim.properties"/>
+  <echo message="vers /home/laurent/workspace/reception_bargibant/target/classes/appConfig.properties ..."/>
+  <copy file="/home/laurent/workspace/reception_bargibant/src/main/config/appConfig-cegim.properties" tofile="/home/laurent/workspace/reception_bargibant/target/classes/appConfig.properties"/>
+  <echo message="Copie du fichier /home/laurent/workspace/reception_bargibant/src/main/config/log4j-dev.xml"/>
+  <echo message="vers /home/laurent/workspace/reception_bargibant/target/classes/log4j.xml ..."/>
+  <copy file="/home/laurent/workspace/reception_bargibant/src/main/config/log4j-dev.xml" tofile="/home/laurent/workspace/reception_bargibant/target/classes/log4j.xml"/>
+  <fixcrlf eol="crlf" includes="*.txt, *.properties, *.xml" srcdir="/home/laurent/workspace/reception_bargibant/target/classes"/>
+</target>
+</project>

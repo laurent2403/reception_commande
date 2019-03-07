@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes graphiques principales.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ *
+ */
+package com.reception.gui.main;

@@ -1,0 +1,112 @@
+package com.reception.gui.main.order;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import org.apache.commons.lang.StringUtils;
+import org.jdesktop.swingx.JXTable;
+
+import com.cegim.reception.commons.bean.ZSynCommande;
+import com.cegim.reception.commons.gui.component.InfoComp;
+import com.cegim.reception.commons.gui.popup.CustomPopup;
+import com.cegim.reception.commons.gui.table.FilterTable;
+import com.cegim.reception.commons.state.OrderState;
+import com.cegim.reception.commons.state.PrintState;
+import com.google.inject.Inject;
+
+/**
+ * Classe implementant les actions a realiser suite au declenchement d'evenement
+ * de la souris.
+ * 
+ * @author Laurent2403 
+ *  
+ */
+public class SynCommandeTableMl extends MouseAdapter {
+
+    /**
+     * La vue des commandes.
+     */
+    private final transient OrderPresenter.View orderView;
+
+    /**
+     * Constructeur.
+     * 
+     * @param pOrderView
+     *            la vue des commandes
+     */
+    @Inject
+    public SynCommandeTableMl(final OrderPresenter.View pOrderView) {
+
+        this.orderView = pOrderView;
+
+    }
+
+    /**
+     * Action a realiser lorsqu'un bouton de la souris a ete enfonce.
+     * 
+     * @param pMouseEvent
+     *            l'evenement a l'origine du changement
+     */
+    @Override
+    public final void mousePressed(final MouseEvent pMouseEvent) {
+
+        // recuperation de la table filtrable et du widget table sous jacent
+        final FilterTable<ZSynCommande<?>> synCmdTable = orderView.getFilterTable();
+        final JXTable table = synCmdTable.getTable();
+
+        // recuperation de l'index dans la vue de la ligne cliquee
+        final int idxRowView = table.rowAtPoint(pMouseEvent.getPoint());
+        // recuperation de l'index dans la vue de la colonne cliquee
+        final int idxColView = table.columnAtPoint(pMouseEvent.getPoint());
+
+        // // verifie que le click n'est pas dans les choux
+        if ((idxColView != -1) && (idxRowView != -1)) {
+
+            // conversion de la ligne et de la col dans le modele de la table
+            final int idxRowModel = table.convertRowIndexToModel(idxRowView);
+            final int idxColModel = table.convertColumnIndexToModel(idxColView);
+
+            // recuperation de l'identifiant de la colonne cliquee
+            final String columnId = synCmdTable.getColumnModel().getColumnId(idxColModel);
+
+            // verifie que l'identifiant de colonne est valorise
+            if (StringUtils.isNotBlank(columnId)) {
+
+                // recupere les donnees de la ligne cliquee
+                final ZSynCommande<?> line = synCmdTable.getFilteredElementAt(idxRowModel);
+
+                if (line != null) {
+                    if (OrderPresenter.View.COL_ETAT_ID.compareTo(columnId) == 0) {
+                        // click dans la colonne etat
+                        final OrderState state = OrderState.get(line.getEtat());
+                        String description = null;
+                        if (state == null) {
+                            description = "Etat inconnu";
+                        } else {
+                            description = state.getDescription();
+                        }
+                        final InfoComp ic = new InfoComp(description);
+                        final CustomPopup popup = new CustomPopup(table, ic.asComponent(), pMouseEvent.getX(),
+                                pMouseEvent.getY());
+                        popup.show();
+
+                    } else if (OrderPresenter.View.COL_ETAT_IMPR_ID.compareTo(columnId) == 0) {
+                        // click dans la colonne etat impression
+                        final PrintState state = PrintState.get(line.getEtatImpr());
+                        String description = null;
+                        if (state == null) {
+                            description = "Etat inconnu";
+                        } else {
+                            description = state.getDescription();
+                        }
+                        final InfoComp ic = new InfoComp(description);
+                        final CustomPopup popup = new CustomPopup(table, ic.asComponent(), pMouseEvent.getX(),
+                                pMouseEvent.getY());
+                        popup.show();
+                    }
+                }
+            }
+        }
+    }
+
+}

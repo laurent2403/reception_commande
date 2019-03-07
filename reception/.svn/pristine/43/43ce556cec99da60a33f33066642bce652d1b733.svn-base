@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes graphiques principales liees aux filtres de commandes.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+package com.reception.gui.main.order.filter;

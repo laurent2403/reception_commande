@@ -1,0 +1,112 @@
+package com.reception.gui.main.filter;
+
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import org.jdesktop.swingx.JXButton;
+import org.joda.time.DateTime;
+
+import com.cegim.reception.commons.entite.ZRepresentant;
+import com.cegim.reception.commons.gui.mvp.SwingPresenter;
+import com.cegim.reception.commons.gui.mvp.SwingView;
+import com.google.common.eventbus.EventBus;
+import com.google.inject.Inject;
+
+/**
+ * Presenter du filtre.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+public class FilterPresenter extends SwingPresenter<FilterPresenter.View> {
+
+    /**
+     * Gestionnaire d'evenements.
+     */
+    private final transient FilterSubscriber filterSb;
+    /**
+     * Action associee au bouton Filtrer.
+     */
+    private final transient ActionListener filterBtnAl;
+
+    /**
+     * Constructeur.
+     * 
+     * @param pEventBus
+     *            l'event bus
+     * @param pView
+     *            la vue
+     * @param pFilterSb
+     *            gestionnaire d'evt
+     * @param pFilterBtnAl
+     *            l'action associee au bouton filtrer
+     */
+    @Inject
+    public FilterPresenter(final EventBus pEventBus, final FilterPresenter.View pView,
+            final FilterSubscriber pFilterSb, final ActionListener pFilterBtnAl) {
+
+        super(pEventBus, pView);
+        filterSb = pFilterSb;
+        filterBtnAl = pFilterBtnAl;
+
+        bind();
+
+    }
+
+    /**
+     * Interface de la vue du presenter.
+     */
+    public interface View extends SwingView {
+
+        /**
+         * Retourne la date de debut saisie dans le filtre.
+         * 
+         * @return la date de debut saisie dans le filtre, peut etre nulle
+         */
+        DateTime getStartDate();
+
+        /**
+         * Retourne la date de fin saisie dans le filtre.
+         * 
+         * @return la date de fin saisie dans le filtre, peut etre nulle
+         */
+        DateTime getEndDate();
+
+        /**
+         * Retourne le representant selectionne.
+         * 
+         * @return le representant selectionne
+         */
+        ZRepresentant getRepresentant();
+
+        /**
+         * Modifie la liste des representants.
+         * 
+         * @param pListRepres
+         *            la nouvelle liste de representants
+         */
+        void setListRepresentant(List<ZRepresentant> pListRepres);
+
+        /**
+         * Retourne le bouton de filtre.
+         * 
+         * @return le bouton de filtre
+         */
+        JXButton getFilterButton();
+
+    }
+
+    /**
+     * Effectue les liaisons.
+     */
+    protected final void bind() {
+
+        // rattache le gestionnaire d'evt a l'event bus
+        eventBus.register(filterSb);
+
+        // ajout d'un gestionnaire d'action au bouton filtrer
+        view.getFilterButton().addActionListener(filterBtnAl);
+
+    }
+
+}

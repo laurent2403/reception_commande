@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes graphiques liees a la configuration.
+ *
+ * @author Johan Melin - CEGIM Informatique
+ *
+ */
+package com.reception.gui.config;

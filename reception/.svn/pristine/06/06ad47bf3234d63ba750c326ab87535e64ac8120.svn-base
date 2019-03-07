@@ -1,0 +1,8 @@
+/**
+ * Fournit les enumerations propres a l'application.
+ *
+ * @author Johan Melin - CEGIM Informatique
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+package com.reception.enumeration;
+

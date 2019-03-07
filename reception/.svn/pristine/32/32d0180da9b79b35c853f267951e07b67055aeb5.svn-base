@@ -1,0 +1,69 @@
+package com.reception.gui.business.display;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.cegim.commons.database.util.DBUtil;
+import com.cegim.commons.exception.util.StackTraceUtil;
+import com.cegim.reception.commons.bean.ZSynCommande;
+import com.cegim.reception.commons.database.DBConnectionFactory;
+import com.google.inject.Inject;
+import com.reception.dao.SynCommandeDao;
+
+/**
+ * Tache d'affichage des commandes synchronisees.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ * 
+ */
+public class DisplayOrderTask {
+
+    /**
+     * Logger de la classe.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DisplayOrderTask.class);
+
+    /**
+     * Fabrique de connexions.
+     */
+    @Inject
+    private transient DBConnectionFactory dbCnxFactory;
+    /**
+     * DAO des commandes synchronisees.
+     */
+    @Inject
+    private transient SynCommandeDao synCommandeDao;
+
+    /**
+     * Retourne la liste des commandes a afficher.
+     * 
+     * @param pCodeSociete
+     *            le code societe
+     * @param pNbHistDay
+     *            le nombre de jours d'historique
+     * @return la liste des commandes a afficher
+     */
+    public final List<ZSynCommande<?>> getDisplayOrderList(final String pCodeSociete, final int pNbHistDay) {
+
+        Connection cnx = null;
+        List<ZSynCommande<?>> listSynCommande = new ArrayList<ZSynCommande<?>>();
+
+        try {
+            // recuperation d'une connexion a la BDD
+            cnx = dbCnxFactory.getRemoteConnection();
+            // recuperation de la liste des commandes synchronisees
+            listSynCommande = synCommandeDao.getListSynCommandeDisplay(cnx, pCodeSociete, pNbHistDay);
+
+        } catch (Exception exception) {
+            LOGGER.debug(StackTraceUtil.getStackMessage(exception));
+        } finally {
+            DBUtil.closeConnection(cnx);
+        }
+
+        return listSynCommande;
+    }
+}

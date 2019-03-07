@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes graphiques principales liees a la barre d'outils.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ *
+ */
+package com.reception.gui.main.toolbar;

@@ -1,0 +1,137 @@
+package com.reception.gui.main;
+
+import java.awt.Component;
+import java.awt.Container;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+
+import net.miginfocom.swing.MigLayout;
+
+import com.cegim.reception.commons.gui.image.CommonsImage;
+import com.cegim.reception.commons.gui.styleguide.CommonsStyleGuide;
+import com.google.inject.Inject;
+import com.reception.gui.main.order.OrderPresenter;
+import com.reception.gui.main.statusbar.StatusBarPresenter;
+import com.reception.gui.main.toolbar.ToolBarPresenter;
+
+/**
+ * Vue principal.
+ * 
+ * @author Laurent2403 
+ *  
+ */
+public class MainView implements MainPresenter.View {
+
+    /**
+     * Fenetre principale.
+     */
+    private transient JFrame mainFrame;
+
+    /**
+     * La vue de la barre d'outils.
+     */
+    private final transient ToolBarPresenter.View toolBarView;
+    /**
+     * La vue des commandes.
+     */
+    private final transient OrderPresenter.View orderView;
+    /**
+     * Vue de la barre de statut.
+     */
+    private final transient StatusBarPresenter.View statusBarView;
+
+    /**
+     * Cree une vue principale.
+     * 
+     * @param pToolBarView
+     *            la vue de la barre d'outils
+     * @param pOrderView
+     *            la vue des commandes
+     * @param pStatusBarView
+     *            la vue de la barre de statut
+     */
+    @Inject
+    public MainView(final ToolBarPresenter.View pToolBarView, final OrderPresenter.View pOrderView,
+            final StatusBarPresenter.View pStatusBarView) {
+
+        toolBarView = pToolBarView;
+        orderView = pOrderView;
+        statusBarView = pStatusBarView;
+        initComponents();
+
+    }
+
+    /**
+     * Initialise les composants.
+     */
+    private void initComponents() {
+
+        // creation de la fenetre principale
+        mainFrame = new JFrame();
+
+        // definition de la mise en page
+        final MigLayout contentPaneLayout = new MigLayout("", "[grow]", "[][grow][]");
+        final Container contentPane = mainFrame.getContentPane();
+        contentPane.setLayout(contentPaneLayout);
+
+        // ajout de la barre d'outils a la fenetre
+        mainFrame.getContentPane().add(toolBarView.asComponent(), "wrap");
+        // ajout de la vue des commandes
+        mainFrame.getContentPane().add(orderView.asComponent(), "grow, wrap");
+        // ajout de la barre d'etat a la fenetre
+        mainFrame.getContentPane().add(statusBarView.asComponent(), "growx");
+
+        // definition du titre de l'application
+        mainFrame.setTitle("Ets Bargibant sa - Réception");
+
+        // definition du type de fermeture de la fenetre
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // definition de l'icone de la fenetre
+        if (CommonsImage.RECEIVE_32 != null) {
+            mainFrame.setIconImage(((ImageIcon) CommonsImage.RECEIVE_32).getImage());
+        }
+
+        // definition de la taille de preference de la fenetre
+        mainFrame.setPreferredSize(CommonsStyleGuide.WINDOW_DIM);
+
+        // passe la fenetre en plein ecran
+        mainFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // met en page les composants
+        mainFrame.pack();
+
+        // centre la fenetre a l'ecran
+        mainFrame.setLocationRelativeTo(null);
+
+    }
+
+    /**
+     * Affiche la fenetre.
+     */
+    @Override
+    public final void displayWindow() {
+        mainFrame.setVisible(true);
+    }
+
+    /**
+     * Retourne la fenetre.
+     * 
+     * @return la fenetre
+     */
+    @Override
+    public final JFrame getFrame() {
+        return mainFrame;
+    }
+
+    /**
+     * Retourne le composant.
+     * 
+     * @return le composant
+     */
+    @Override
+    public final Component asComponent() {
+        return mainFrame;
+    }
+}

@@ -1,0 +1,6 @@
+/**
+ * Fournit les classes graphiques principales liees aux commandes.
+ * 
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+package com.reception.gui.main.order;

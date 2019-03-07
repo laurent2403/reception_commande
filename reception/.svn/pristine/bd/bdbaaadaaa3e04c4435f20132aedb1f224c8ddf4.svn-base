@@ -1,0 +1,7 @@
+/**
+ * Fournit les classes graphiques liees a la Legende.
+ *
+ * @author Johan Melin - CEGIM Informatique
+ * @author Nicolas MENDY - CEGIM Informatique
+ */
+package com.reception.gui.legend;

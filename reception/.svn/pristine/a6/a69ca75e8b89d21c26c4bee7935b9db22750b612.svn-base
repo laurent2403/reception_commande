@@ -1,0 +1,524 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.cegim.bargibant</groupId>
+	<artifactId>reception</artifactId>
+	<version>0.0.1.0</version>
+	<packaging>jar</packaging>
+
+	<name>Reception</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+
+		<!-- encodage des sources -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- format de l'heure du build -->
+		<maven.build.timestamp.format>dd/MM/yyyy-HH:mm</maven.build.timestamp.format>
+		<!-- nom de l'application -->
+		<application.name>${project.name}</application.name>
+		<!-- classe contenant le main de l'application -->
+		<application.main.class>com.reception.app.App</application.main.class>
+		<!-- permet de changer l'environnement cible -->
+		<!-- valeurs possibles : dev ou prod -->
+		<target.env>dev</target.env>
+		<!-- permet de changer le client cible -->
+		<!-- valeurs possibles : cegim ou bargibant -->
+		<target.client>cegim</target.client>
+		<!-- permet de changer l'os cible -->
+		<!-- valeurs possibles : linux ou windows -->
+		<target.os>linux</target.os>
+
+	</properties>
+
+	<dependencies>
+
+		<!-- Librairie de test unitaire -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Librairie de log generique -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.16</version>
+		</dependency>
+
+		<!-- Librairie de couplage entre slf4j et log4j -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.16</version>
+		</dependency>
+
+		<!-- Librairie log4j implementation de sl4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
+		<!-- Librairie de log jdbc -->
+		<dependency>
+			<groupId>net.sf.log4jdbc</groupId>
+			<artifactId>log4jdbc</artifactId>
+			<version>4-1.2</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- Commons Configuration de Apache -->
+		<dependency>
+			<groupId>commons-configuration</groupId>
+			<artifactId>commons-configuration</artifactId>
+			<version>1.10</version>
+		</dependency>
+
+		<!-- Commons codec de Apache -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+
+		<!-- Commons lang3 de Apache -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.4</version>
+		</dependency>
+
+		<!-- Commons collections de Apache -->
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
+		<!-- Commons IO de Apache -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<!-- PDF BOX de Apache -->
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+
+		<!-- FOP de Apache -->
+		<dependency>
+			<groupId>org.apache.xmlgraphics</groupId>
+			<artifactId>fop</artifactId>
+			<version>1.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>avalon-framework-api</artifactId>
+					<groupId>org.apache.avalon.framework</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>avalon-framework-impl</artifactId>
+					<groupId>org.apache.avalon.framework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- these two are to correct issues in fop dependency -->
+		<dependency>
+			<groupId>avalon-framework</groupId>
+			<artifactId>avalon-framework-api</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>avalon-framework</groupId>
+			<artifactId>avalon-framework-impl</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+
+		<!-- Driver JDBC Informix -->
+		<dependency>
+			<groupId>com.informix</groupId>
+			<artifactId>ifxjdbc</artifactId>
+			<version>4.10</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- Joda Time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<!-- Composants swing evolues -->
+		<dependency>
+			<groupId>org.swinglabs.swingx</groupId>
+			<artifactId>swingx-all</artifactId>
+			<version>1.6.5-1</version>
+		</dependency>
+
+		<!-- GlazedLists -->
+		<dependency>
+			<groupId>net.java.dev.glazedlists</groupId>
+			<artifactId>glazedlists_java15</artifactId>
+			<version>1.9.1</version>
+		</dependency>
+
+		<!-- Gestionnaire de layout mig -->
+		<dependency>
+			<groupId>com.miglayout</groupId>
+			<artifactId>miglayout-swing</artifactId>
+			<version>5.0</version>
+		</dependency>
+
+		<!-- JGoodies common -->
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-common</artifactId>
+			<version>1.8.1</version>
+		</dependency>
+
+		<!-- JGoodies validation -->
+		<dependency>
+			<groupId>com.jgoodies</groupId>
+			<artifactId>jgoodies-validation</artifactId>
+			<version>2.5.1</version>
+		</dependency>
+
+		<!-- Google Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
+
+		<!-- Google guice -->
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
+
+		<!-- Librairie commune reception -->
+		<dependency>
+			<groupId>com.cegim.reception.commons</groupId>
+			<artifactId>reception-commons</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+
+		<!-- Librairie commune cegim -->
+		<dependency>
+			<groupId>com.cegim.commons</groupId>
+			<artifactId>cegim-commons</artifactId>
+			<version>0.0.5-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+
+	</dependencies>
+
+
+	<repositories>
+
+		<!-- Repository de Codehaus -->
+		<repository>
+			<id>Codehaus Snapshots</id>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+
+	</repositories>
+
+	<pluginRepositories>
+
+		<!-- PluginRepository de Codehaus -->
+		<pluginRepository>
+			<id>Codehaus Snapshots</id>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>  <!-- Workaround for MNG-2974, see note below -->
+			</releases>
+		</pluginRepository>
+
+	</pluginRepositories>
+
+	<build>
+		<plugins>
+
+			<!-- definition du compilateur -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.0</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- insere le numero de version du pom dans le manifest du jar -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+							<addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!-- cree un seul gros jar incluant toutes les dependances -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<manifestEntries>
+										<Main-Class>${application.main.class}</Main-Class>
+									</manifestEntries>
+								</transformer>
+							</transformers>
+							<finalName>uber-${project.artifactId}-${project.version}</finalName>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- divers taches Ant -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<configuration>
+							<target>
+
+								<!-- copie du fichier readme -->
+								<echo message="Copie du fichier ${project.basedir}/README.txt" />
+								<echo message="vers ${project.build.directory}/README.txt ..." />
+								<copy file="${project.basedir}/README.txt" tofile="${project.build.directory}/README.txt" />
+								<!-- remplacement de build_date par la date de compilation -->
+								<replace token="build_date" value="${maven.build.timestamp}"
+									dir="${project.build.directory}">
+									<include name="README.txt" />
+								</replace>
+								<!-- remplacement de cur_version par la version du projet -->
+								<replace token="cur_version" value="${project.version}"
+									dir="${project.build.directory}">
+									<include name="README.txt" />
+								</replace>
+								<!-- remplacement des retours charriot pour windows -->
+								<fixcrlf srcdir="${project.build.directory}" includes="README.txt"
+									eol="crlf" />
+
+								<!-- copie du fichier de configuration -->
+								<echo
+									message="Copie du fichier ${project.basedir}/src/main/config/appConfig-${target.client}.properties" />
+								<echo
+									message="vers ${project.build.outputDirectory}/appConfig.properties ..." />
+								<copy
+									file="${project.basedir}/src/main/config/appConfig-${target.client}.properties"
+									tofile="${project.build.outputDirectory}/appConfig.properties" />
+
+								<!-- copie du fichier de config de log4j -->
+								<echo
+									message="Copie du fichier ${project.basedir}/src/main/config/log4j-${target.env}.xml" />
+								<echo message="vers ${project.build.outputDirectory}/log4j.xml ..." />
+								<copy
+									file="${project.basedir}/src/main/config/log4j-${target.env}.xml"
+									tofile="${project.build.outputDirectory}/log4j.xml" />
+
+								<!-- remplacement des retours charriot pour windows -->
+								<fixcrlf srcdir="${project.build.outputDirectory}"
+									includes="*.txt, *.properties, *.xml" eol="crlf" />
+
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- generation de la javadoc avec des diagrammes (mvn javadoc:javadoc) -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<doclet>org.umlgraph.doclet.UmlGraphDoc</doclet>
+					<docletArtifact>
+						<groupId>org.umlgraph</groupId>
+						<artifactId>umlgraph</artifactId>
+						<version>5.6</version>
+					</docletArtifact>
+					<additionalparam>-views -all</additionalparam>
+					<useStandardDocletOptions>true</useStandardDocletOptions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-antrun-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
+	</build>
+
+	<profiles>
+
+		<!-- profil pour windows -->
+		<profile>
+			<id>windows-profile</id>
+			<activation>
+				<property>
+					<name>target.os</name>
+					<value>windows</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+
+					<!-- creation d'un executable -->
+					<plugin>
+						<groupId>com.akathist.maven.plugins.launch4j</groupId>
+						<artifactId>launch4j-maven-plugin</artifactId>
+						<version>1.5.2</version>
+						<executions>
+							<execution>
+								<id>l4j-clui</id>
+								<phase>package</phase>
+								<goals>
+									<goal>launch4j</goal>
+								</goals>
+								<configuration>
+									<headerType>gui</headerType>
+									<outfile>${project.build.directory}/${application.name}.exe</outfile>
+									<jar>${project.build.directory}/uber-${project.artifactId}-${project.version}.jar</jar>
+									<dontWrapJar>false</dontWrapJar>
+									<errTitle>${project.name}</errTitle>
+									<cmdLine></cmdLine>
+									<chdir>.</chdir>
+									<stayAlive>false</stayAlive>
+									<icon>src/main/resources/icon/application.ico</icon>
+									<downloadUrl>http://java.com/download</downloadUrl>
+									<classPath>
+										<mainClass>${application.main.class}</mainClass>
+										<addDependencies>false</addDependencies>
+										<preCp>anything</preCp>
+									</classPath>
+									<jre>
+										<minVersion>1.6.0</minVersion>
+										<jdkPreference>preferJre</jdkPreference>
+										<opts>
+											<opt>-Dlog4j.configuration=file:log4j.xml</opt>
+										</opts>
+									</jre>
+									<versionInfo>
+										<fileVersion>${project.version}</fileVersion>
+										<txtFileVersion>${project.version}</txtFileVersion>
+										<fileDescription>${project.name}</fileDescription>
+										<copyright>Cegim Informatique Copyright</copyright>
+										<productVersion>${project.version}</productVersion>
+										<txtProductVersion>${project.version}</txtProductVersion>
+										<productName>${application.name}</productName>
+										<companyName>Cegim Informatique</companyName>
+										<internalName>${application.name}</internalName>
+										<originalFilename>${application.name}.exe</originalFilename>
+									</versionInfo>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- creation d'un installateur windows -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>nsis-maven-plugin</artifactId>
+						<version>1.0-SNAPSHOT</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>generate-project</goal>
+									<goal>compile</goal>
+								</goals>
+								<configuration>
+									<setupScript>src/main/assembly/setup.nsi</setupScript>
+									<outputFile>${project.build.directory}/${project.name}-${target.client}-${project.version}-setup.exe</outputFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+</project>

@@ -1,0 +1,63 @@
+package com.reception.gui.config;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import com.cegim.reception.commons.gui.config.event.EditConfigurationEvent;
+import com.google.common.eventbus.EventBus;
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
+/**
+ * Classe implementant l'action a realiser suite a l'appui sur le bouton
+ * Configuration.
+ * 
+ * @author Laurent2403 
+ */
+public class ConfigBtnAl implements ActionListener {
+
+    /**
+     * Event Bus.
+     */
+    private final transient EventBus eventBus;
+    /**
+     * Provider du presenter de la fenetre Configuration.
+     */
+    private final transient Provider<ConfigPresenter> configPresenterPvd;
+
+    /**
+     * Constructeur.
+     * 
+     * @param pEventBus
+     *            l'event bus
+     * @param pConfigPresPvd
+     *            le provider du presenter de la fenetre Configuration
+     */
+    @Inject
+    public ConfigBtnAl(final EventBus pEventBus, final Provider<ConfigPresenter> pConfigPresPvd) {
+
+        eventBus = pEventBus;
+        configPresenterPvd = pConfigPresPvd;
+
+    }
+
+    /**
+     * Action a realiser.
+     * 
+     * @param actionEvent
+     *            l'evenement a l'origine de l'action
+     */
+    @Override
+    public final void actionPerformed(final ActionEvent actionEvent) {
+
+        // recuperation du presenter
+        final ConfigPresenter configPresenter = configPresenterPvd.get();
+
+        // envoi d'un evt d'edition de la configuration
+        eventBus.post(new EditConfigurationEvent(this));
+
+        // affichage de la vue
+        configPresenter.getView().setVisible(true);
+
+    }
+}

@@ -1,0 +1,119 @@
+package com.reception.gui.main.toolbar;
+
+import java.awt.Component;
+
+import net.miginfocom.swing.MigLayout;
+
+import org.jdesktop.swingx.JXButton;
+import org.jdesktop.swingx.JXPanel;
+
+import com.cegim.reception.commons.gui.image.CommonsImage;
+import com.google.inject.Inject;
+
+/**
+ * Vue de la barre d'outils.
+ * 
+ * @author Laurent2403 
+ */
+public class ToolBarView implements ToolBarPresenter.View {
+
+    /**
+     * Le panneau conteneur.
+     */
+    private transient JXPanel panel;
+    /**
+     * Bouton Legende.
+     */
+    private transient JXButton legendButton;
+    /**
+     * Bouton Configuration.
+     */
+    private transient JXButton configButton;
+    /**
+     * Bouton A propos.
+     */
+    private transient JXButton aboutButton;
+
+    /**
+     * Cree la vue de la barre d'outils.
+     * 
+     */
+    @Inject
+    public ToolBarView() {
+
+        initComponents();
+
+    }
+
+    /**
+     * Initialise les composants.
+     */
+    private void initComponents() {
+
+        // creation du bouton Legende
+        legendButton = new JXButton("Légende");
+        legendButton.setIcon(CommonsImage.HELP_16);
+        legendButton.setToolTipText("Ouvrir la légende");
+
+        // creation du bouton Configuration
+        configButton = new JXButton("Configuration");
+        configButton.setIcon(CommonsImage.CONFIG_16);
+        configButton.setToolTipText("Modifier la configuration de l'application");
+
+        // creation du bouton a propos
+        aboutButton = new JXButton("A propos...");
+        aboutButton.setIcon(CommonsImage.INFO_16);
+        aboutButton.setToolTipText("A propos...");
+
+        // creation du panneau contenant les boutons
+        panel = new JXPanel();
+        final MigLayout mainPnlLayout = new MigLayout("", "", "");
+        panel.setLayout(mainPnlLayout);
+
+        // ajout des boutons au panneau
+        panel.add(legendButton);
+        panel.add(configButton);
+        panel.add(aboutButton);
+
+    }
+
+    /**
+     * Retourne le bouton Legende.
+     * 
+     * @return le bouton Legende
+     */
+    @Override
+    public final JXButton getLegendButton() {
+        return legendButton;
+    }
+
+    /**
+     * Retourne le bouton Configuration.
+     * 
+     * @return le bouton Configuration
+     */
+    @Override
+    public final JXButton getConfigButton() {
+        return configButton;
+    }
+
+    /**
+     * Retourne le bouton A propos.
+     * 
+     * @return le bouton A propos
+     */
+    @Override
+    public final JXButton getAboutButton() {
+        return aboutButton;
+    }
+
+    /**
+     * Retourne le composant.
+     * 
+     * @return le composant
+     */
+    @Override
+    public final Component asComponent() {
+        return panel;
+    }
+}

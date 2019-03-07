@@ -1,0 +1,8 @@
+/**
+ * Fournit la definition des classes de generation xml.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ *
+ */
+package com.reception.xmlgen;
+

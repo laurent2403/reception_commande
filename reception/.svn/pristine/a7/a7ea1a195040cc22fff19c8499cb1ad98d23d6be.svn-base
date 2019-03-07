@@ -1,0 +1,8 @@
+/**
+ * Fournit les classes principales de l'application.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ * @author Nicolas Mendy - CEGIM Informatique
+ */
+package com.reception.app;
+

@@ -1,0 +1,168 @@
+package com.reception.gui.legend;
+
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+
+import net.miginfocom.swing.MigLayout;
+
+import org.jdesktop.swingx.JXButton;
+import org.jdesktop.swingx.JXLabel;
+import org.jdesktop.swingx.JXPanel;
+
+import com.cegim.reception.commons.gui.image.CommonsImage;
+import com.cegim.reception.commons.gui.legend.LegendPresenter;
+import com.cegim.reception.commons.gui.styleguide.CommonsStyleGuide;
+import com.google.inject.Inject;
+import com.reception.gui.main.MainPresenter;
+
+/**
+ * Vue Legende.
+ * 
+ * @author Laurent2403 
+ *  
+ */
+public class LegendView implements LegendPresenter.View {
+
+    /**
+     * La vue principale.
+     */
+    private final transient MainPresenter.View mainView;
+    /**
+     * Fenetre Legende.
+     */
+    private transient JDialog legendDialog;
+    /**
+     * Le bouton ok.
+     */
+    private transient JXButton okButton;
+
+    /**
+     * Dimension de predilection de la fenetre.
+     */
+    private static final Dimension WINDOW_DIM = new Dimension(280, 260);
+
+    /**
+     * Constructeur.
+     * 
+     * @param pMainView
+     *            la vue principale
+     */
+    @Inject
+    public LegendView(final MainPresenter.View pMainView) {
+
+        mainView = pMainView;
+        initComponents();
+
+    }
+
+    /**
+     * Cette methode est apelle depuis le constructeur et sert a intialiser les
+     * composants du panneau.
+     * 
+     */
+    private void initComponents() {
+
+        // creation de la fenetre modale
+        // et rattache a la fenetre de la vue principale
+        legendDialog = new JDialog(mainView.getFrame(), true);
+
+        // definition de la mise en page
+        final MigLayout contentPaneLayout = new MigLayout("", "[grow]", "[][grow][]");
+        final Container contentPane = legendDialog.getContentPane();
+        contentPane.setLayout(contentPaneLayout);
+
+        // definition du titre de la fenetre
+        legendDialog.setTitle("Légende");
+
+        // definition du type de fermeture de la fenetre
+        legendDialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+
+        // definition de l'icone de la fenetre
+        if (CommonsImage.INFO_16 != null) {
+            legendDialog.setIconImage(((ImageIcon) CommonsImage.INFO_16).getImage());
+        }
+
+        // definition de la taille de preference de la fenetre
+        legendDialog.setPreferredSize(LegendView.WINDOW_DIM);
+
+        // conditionne la fenetre
+        legendDialog.pack();
+
+        // centre la fenetre par rapport a la fenetre parente
+        legendDialog.setLocationRelativeTo(mainView.getFrame());
+
+        // titre du panneau
+        final JXLabel titleLabel = new JXLabel("Légende");
+        // generation d'une police plus grosse
+        final Font defaultFont = titleLabel.getFont();
+        final Font bigFont = defaultFont.deriveFont((float) (defaultFont.getSize() * CommonsStyleGuide.BIG_FONT_RATIO));
+        titleLabel.setFont(bigFont);
+
+        // creation des libelles
+        final JXLabel synchronizedLbl = new JXLabel("Commande synchronisée");
+        synchronizedLbl.setIcon(CommonsImage.OK_24);
+        final JXLabel copyingLbl = new JXLabel("Commande en cours de copie");
+        copyingLbl.setIcon(CommonsImage.EXCLAMATION_24);
+        final JXLabel unknownLbl = new JXLabel("Etat inconnu");
+        unknownLbl.setIcon(CommonsImage.QUESTION_24);
+        final JXLabel printedLbl = new JXLabel("Commande imprimée");
+        printedLbl.setIcon(CommonsImage.PRINT_24);
+
+        // creation du panneau contenant les libelles des legendes
+        final JXPanel lblLegendPanel = new JXPanel();
+        final MigLayout lblPanelLayout = new MigLayout("", "", "");
+        lblLegendPanel.setLayout(lblPanelLayout);
+        // ajout des libelles de legende
+        lblLegendPanel.add(synchronizedLbl, "wrap");
+        lblLegendPanel.add(copyingLbl, "wrap");
+        lblLegendPanel.add(unknownLbl, "wrap");
+        lblLegendPanel.add(printedLbl, "wrap");
+
+        // creation du bouton ok
+        okButton = new JXButton("OK");
+        okButton.setIcon(CommonsImage.OK_32);
+        okButton.setToolTipText("Valider");
+
+        contentPane.add(titleLabel, "center, wrap");
+        contentPane.add(lblLegendPanel, "grow, wrap");
+        contentPane.add(okButton, "center");
+
+    }
+
+    /**
+     * Retourne le bouton ok.
+     * 
+     * @return le bouton ok
+     */
+    @Override
+    public final JXButton getOkButton() {
+        return okButton;
+    }
+
+    /**
+     * Affiche ou masque la fenetre.
+     * 
+     * @param pVisible
+     *            true pour afficher, false pour masquer
+     */
+    @Override
+    public final void setVisible(final boolean pVisible) {
+        legendDialog.setVisible(pVisible);
+    }
+
+    /**
+     * Retourne le composant.
+     * 
+     * @return le composant
+     */
+    @Override
+    public final Component asComponent() {
+        return legendDialog;
+    }
+
+}

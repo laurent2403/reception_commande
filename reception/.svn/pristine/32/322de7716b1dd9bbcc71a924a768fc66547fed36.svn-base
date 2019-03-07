@@ -1,0 +1,48 @@
+package com.reception.gui.main;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Classe implementant les actions a realiser suite au declenchement d'evenement
+ * de la fenetre principale.
+ * 
+ * @author Johan Melin - CEGIM Informatique
+ * 
+ */
+public class MainWl extends WindowAdapter {
+
+    /**
+     * Logger de la classe.
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainWl.class);
+
+    /**
+     * Action a realiser suite a l'ouverture de la fenetre.
+     * 
+     * @param pWindowEvent
+     *            l'evenement a l'origine
+     */
+    @Override
+    public final void windowOpened(final WindowEvent pWindowEvent) {
+
+        LOGGER.info("Ouverture de l'application, version : " + this.getClass().getPackage().getImplementationVersion());
+
+    }
+
+    /**
+     * Action a realiser suite a la fermeture de la fenetre.
+     * 
+     * @param pWindowEvent
+     *            l'evenement a l'origine
+     */
+    @Override
+    public final void windowClosing(final WindowEvent pWindowEvent) {
+
+        LOGGER.info("Fermeture de l'application");
+
+    }
+}
